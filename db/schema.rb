@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20120209231801) do
     t.string   "slug",                   :limit => 100
     t.string   "breadcrumb",             :limit => 160
     t.string   "class_name",             :limit => 25
-    t.integer  "status_id",                              :default => 1,     :null => false
+    t.integer  "status_id",                             :default => 1,     :null => false
     t.integer  "parent_id"
     t.integer  "layout_id"
     t.datetime "created_at"
@@ -87,15 +87,21 @@ ActiveRecord::Schema.define(:version => 20120209231801) do
     t.datetime "published_at"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
-    t.boolean  "virtual",                                :default => false, :null => false
-    t.integer  "lock_version",                           :default => 0
-    t.text     "allowed_children_cache", :limit => 1500, :default => ""
+    t.boolean  "virtual",                               :default => false, :null => false
+    t.integer  "lock_version",                          :default => 0
+    t.text     "allowed_children_cache"
   end
 
-  add_index "pages", ["class_name"], :name => "altered_pages_class_name"
-  add_index "pages", ["parent_id"], :name => "altered_pages_parent_id"
-  add_index "pages", ["slug", "parent_id"], :name => "altered_pages_child_slug"
-  add_index "pages", ["virtual", "status_id"], :name => "altered_pages_published"
+  add_index "pages", ["class_name"], :name => "pages_class_name"
+  add_index "pages", ["parent_id"], :name => "pages_parent_id"
+  add_index "pages", ["slug", "parent_id"], :name => "pages_child_slug"
+  add_index "pages", ["virtual", "status_id"], :name => "pages_published"
+
+  create_table "people", :force => true do |t|
+  end
+
+  create_table "places", :force => true do |t|
+  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id"

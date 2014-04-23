@@ -58,9 +58,25 @@ This will install the gem with the prerelease name, for example: ‘radiant-0.9.
 
 ## Development Requirements
 
-To run tests you will need to have the following gems installed:
+To run tests on radiant itself:
 
-  gem install ZenTest rspec rspec-rails cucumber webrat nokogiri sqlite3-ruby
+1. Edit the Gemfile and uncomment the lines that tell you to do so for working on radiant itself.
+1. Run `TRAVIS=1 bundle`.
+1. If using postgres run (for other DBs see bin/ci/before_script):
+
+        psql -c 'create database radiant_test;' -U postgres
+        cp spec/ci/database.postgresql.yml config/database.yml
+
+1. Set up the database by running:
+
+        RAILS_ENV=test bundle exec rake db:migrate
+        RAILS_ENV=test bundle exec rake db:migrate:extensions
+
+1. And finally run the tests with:
+
+        RAILS_ENV=test bundle exec rake spec --trace
+
+No, I don't know why this requires you to run the tests in the test environment explicitly. But go ahead and try it without that, you'll see.
 
 ## Support
 
